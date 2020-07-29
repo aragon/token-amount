@@ -1,4 +1,5 @@
 import JSBI from 'jsbi'
+import { getConvertedAmount } from './convert'
 import { formatTokenAmount } from './format'
 
 export default class TokenAmount {
@@ -44,6 +45,16 @@ export default class TokenAmount {
       throw new Error('TokenAmount.import(): invalid data format provided.')
     }
     return new TokenAmount(data.v, data.d, { symbol: data.s })
+  }
+
+  static convert(amount, rate, decimals, options) {
+    const convertedAmount = getConvertedAmount(amount, rate)
+    return new TokenAmount(convertedAmount, decimals, options)
+  }
+
+  convert(rate, decimals, options) {
+    const convertedAmount = getConvertedAmount(this.#value, rate)
+    return new TokenAmount(convertedAmount, decimals, options)
   }
 
   static format = formatTokenAmount
