@@ -29,7 +29,7 @@ export function formatNumber(number) {
  * @param {BigInt|string|number} amount              Number to round
  * @param {BigInt|string|number} decimals            Decimal placement for amount
  * @param {BigInt|string|number} digits              Rounds the number to a given decimal place
- * @param {boolean}              options.commify     Decides if the new amount should have commas
+ * @param {boolean}              options.commify     Decides if the formatted amount should include commas
  * @param {boolean}              options.displaySign Decides if the sign should be displayed
  * @param {string}               options.symbol      Symbol for the token amount
  * @returns {string}
