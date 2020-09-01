@@ -51,8 +51,7 @@ Alias to TokenAmount#format().
 
 ### TokenAmount#convert(rate, decimals, options)
 
-Converts from a rate, returning a new `TokenAmount` instance with the desired decimals and set
-options.
+Converts from a rate, returning a new `TokenAmount` instance with the desired decimals and set options.
 
 #### Parameters
 
