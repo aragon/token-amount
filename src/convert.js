@@ -17,7 +17,6 @@ function getRawRate(convertRate) {
  * Conversion rate (1 ETH = ? ANT): 1 ETH = 0.10 ANT
  * Converted Amount = 10 / 0.10 = 100 ETH.
  *
- *
  * @param {BigInt} amount                            Amount of the input token to convert.
  * @param {BigInt|string|number} decimals            Decimal placement for amount
  * @returns {string}
