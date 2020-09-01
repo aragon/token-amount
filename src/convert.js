@@ -1,12 +1,27 @@
 import JSBI from 'jsbi'
 
-export function getRawRate(convertRate) {
+function getRawRate(convertRate) {
   if (typeof convertRate === 'number' || typeof convertRate === 'string') {
     return convertRate.toString().split('.')
   }
   return [convertRate.value, '']
 }
 
+/**
+ * Converts an amount. the conversion rate is expressed as how much of the
+ * current token is needed to get 1 unit of the ouput token,
+ * e.g:
+ * Input token: ANT
+ * Output token: ETH
+ * Amount of ANT: 10
+ * Conversion rate (1 ETH = ? ANT): 1 ETH = 0.10 ANT
+ * Converted Amount = 10 / 0.10 = 100 ETH.
+ *
+ *
+ * @param {BigInt} amount                            Amount of the input token to convert.
+ * @param {BigInt|string|number} decimals            Decimal placement for amount
+ * @returns {string}
+ */
 export function getConvertedAmount(amount, convertRate) {
   const [whole = '', dec = ''] = getRawRate(convertRate)
   // Remove any trailing zeros from the decimal part
