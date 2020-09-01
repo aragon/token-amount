@@ -41,7 +41,7 @@ Formats the token amount.
 #### Parameters
 
 - `options.symbol`: the token symbol, as a `String`. Overrides the value set in the constructor.
-- `options.commify`: whether the token amount should have comma separators
+- `options.commify`: whether the formatted amount should include comma separators
 - `options.digits`: the number of digits to display. Defaults to `2`.
 - `options.displaySign`: whether the sign (`-` or `+`) should be displayed for the amount.
 
@@ -83,6 +83,6 @@ Static equivalent of `TokenAmount#format()`.
 - `value`: the amount value, as a `BigInt`, `String`, `Number` or `BigInt`-like (e.g. BN.js).
 - `decimals`: the amount of decimals, as a `BigInt`, `String`, `Number` or `BigInt`-like (e.g. BN.js).
 - `options.symbol`: the token symbol, as a `String`.
-- `options.commify`: wether the token amount should have comma separators
+- `options.commify`: whether the token amount should have comma separators
 - `options.digits`: the number of digits to display. Defaults to `2`.
 - `options.displaySign`: whether the sign (`-` or `+`) should be displayed for the amount.
