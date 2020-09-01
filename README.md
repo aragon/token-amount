@@ -58,9 +58,6 @@ Converts from a rate, returning a new `TokenAmount` instance with the desired de
 - `rate`: the rate to convert from, as a `BigInt`, `String`, `Number` or `TokenAmount`.
 - `decimals`: the amount of decimals, as a `BigInt`, `String`, `Number` or `BigInt`-like (e.g. BN.js).
 - `options.symbol`: the token symbol, as a `String`. Overrides the value set in the constructor.
-- `options.commify`: whether the token amount should have comma separators
-- `options.digits`: the number of digits to display. Defaults to `2`.
-- `options.displaySign`: whether the sign (`-` or `+`) should be displayed for the amount.
 
 ### TokenAmount.convert(amount, rate, decimals, options)
 
