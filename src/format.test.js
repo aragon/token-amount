@@ -172,4 +172,22 @@ describe('formatTokenAmount()', () => {
       formatTokenAmount(BigInt('2839000000010000000000'), 18, { digits: -2 })
     }).toThrow()
   })
+
+  test('should not show commas if the commify option is not being passed in', () => {
+    expect(
+      formatTokenAmount(BigInt('1000000000000000000000'), 18, {
+        commify: false,
+      })
+    ).toEqual('1000')
+    expect(
+      formatTokenAmount(BigInt('98765000000000000000000'), 18, {
+        commify: false,
+      })
+    ).toEqual('98765')
+    expect(
+      formatTokenAmount(BigInt('501924000000000000000000'), 18, {
+        commify: false,
+      })
+    ).toEqual('501924')
+  })
 })
