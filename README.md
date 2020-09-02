@@ -45,7 +45,7 @@ Formats the token amount.
 - `options.digits`: the number of digits to display. Defaults to `2`.
 - `options.displaySign`: whether the sign (`-` or `+`) should be displayed for the amount.
 
-### TokenAmount#format(options)
+### TokenAmount#toString(options)
 
 Alias to TokenAmount#format().
 
