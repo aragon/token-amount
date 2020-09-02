@@ -9,7 +9,7 @@ function getRawRate(convertRate) {
 
 /**
  * Converts an amount. the conversion rate is expressed as how much of the
- * current token is needed to get 1 unit of the ouput token,
+ * current token is needed to get 1 unit of the ouput token.
  * e.g:
  * Input token: ANT
  * Output token: ETH

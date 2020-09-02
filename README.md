@@ -51,7 +51,12 @@ Alias to TokenAmount#format().
 
 ### TokenAmount#convert(rate, decimals, options)
 
-Converts from a rate, returning a new `TokenAmount` instance with the desired decimals and set options.
+Converts from a rate, returning a new `TokenAmount` instance with the desired decimals and set options. The conversion rate is expressed as how much of the current token is needed to get 1 unit of the ouput token. An example would be:
+- Input token: ANT
+- Output token: ETH
+- Amount of ANT: 10
+- Conversion rate (1 ETH = ? ANT): 1 ETH = 0.10 ANT
+- Converted Amount = 10 / 0.10 = 100 ETH.
 
 #### Parameters
 
