@@ -49,24 +49,27 @@ Formats the token amount.
 
 Alias to TokenAmount#format().
 
-### TokenAmount#convert(rate, decimals, options)
+### TokenAmount#convert(rate, targetDecimals, options)
 
-Converts from a rate, returning a new `TokenAmount` instance with the desired decimals and set options. The conversion rate is expressed as how much of the current token is needed to get 1 unit of the ouput token. An example would be:
-- Input token: ANT
-- Output token: ETH
-- Amount of ANT: 10
-- Conversion rate (1 ETH = ? ANT): 1 ETH = 0.10 ANT
-- Converted Amount = 10 / 0.10 = 100 ETH.
+Converts from a rate, returning a new `TokenAmount` instance with the desired decimals and set options. The conversion rate is expressed as the amount of the output token obtained per unit of the input token. An example would be:
+ - Input token: ANT
+ - Output token: ETH
+ - Amount of ANT: 10
+ - Conversion rate: 0.5 ETH per ANT. (1 ANT = 0.5 ETH)
+ - Converted Amount = 10 * 0.50 = 5 ETH.
 
 #### Parameters
 
 - `rate`: the rate to convert from, as a `BigInt`, `String`, `Number` or `TokenAmount`.
-- `decimals`: the amount of decimals, as a `BigInt`, `String`, `Number` or `BigInt`-like (e.g. BN.js).
+- `targetDecimals`: the target amount of decimals for the output, as a `BigInt`, `String`, `Number` or `BigInt`-like (e.g. BN.js).
 - `options.symbol`: the token symbol, as a `String`. Overrides the value set in the constructor.
+- `options.commify`: whether the formatted amount should include comma separators
+- `options.digits`: the number of digits to display. Defaults to `2`.
+- `options.displaySign`: whether the sign (`-` or `+`) should be displayed for the amount.
 
-### TokenAmount.convert(amount, rate, decimals, options)
+### TokenAmount.convert(amount, decimals, rate, targetDecimals, options)
 
-Static equivalent of `TokenAmount#convert(rate, decimals, options)`.
+Static equivalent of `TokenAmount#convert()`.
 
 ### TokenAmount#export()
 

@@ -1,41 +1,64 @@
 import JSBI from 'jsbi'
 
+// Many times during calculations we need to "scale up" the
+// numbers so we can perform certain calculations such as division more easily;
+// We'd usually calculate this manually, but can be a chore; so we'll take an extra
+// step and scale it up by an arbitrary amount first before doing all other calculations.
+const PRECISION_MIN = JSBI.BigInt('6')
+
 function getRawRate(convertRate) {
-  if (typeof convertRate === 'number' || typeof convertRate === 'string') {
-    return convertRate.toString().split('.')
-  }
-  return [convertRate.value, '']
+  return convertRate.toString().split('.')
 }
 
 /**
- * Converts an amount. the conversion rate is expressed as how much of the
- * current token is needed to get 1 unit of the ouput token.
+ * Converts an amount. The conversion rate is expressed as the amount of the output token
+ * obtained per unit of the input token.
+ *
  * e.g:
  * Input token: ANT
  * Output token: ETH
  * Amount of ANT: 10
- * Conversion rate (1 ETH = ? ANT): 1 ETH = 0.10 ANT
- * Converted Amount = 10 / 0.10 = 100 ETH.
+ * Conversion rate: 0.5 ETH per ANT. (1 ANT = 0.5 ETH)
+ * Converted Amount = 10 * 0.50 = 5 ETH.
  *
  * @param {BigInt} amount                            Amount of the input token to convert.
- * @param {BigInt|string|number} decimals            Decimal placement for amount
- * @returns {string}
+ * @param {BigInt|string|number} decimals            Decimals of the input token to convert.
+ * @param {BigInt|string|number} convertRate         Rate of conversion between the input and output token.
+ * @param {BigInt} targetDecimals                    Decimals for the output amount.
+ * @returns {BigInt}
  */
-export function getConvertedAmount(amount, convertRate) {
+export function getConvertedAmount(
+  amount,
+  decimals,
+  convertRate,
+  targetDecimals
+) {
   const [whole = '', dec = ''] = getRawRate(convertRate)
   // Remove any trailing zeros from the decimal part
   const parsedDec = dec.replace(/0*$/, '')
   // Construct the final rate, and remove any leading zeros
   const rate = `${whole}${parsedDec}`.replace(/^0*/, '')
 
-  // Number of decimals to shift the amount of the token passed in,
-  // resulting from converting the rate to a number without any decimal
-  // places
+  // We need to remember this to properly scale the resulting converted number
+  // down, as the decimals added through the safe shifting of the conversion rate
+  // will get added to the final number.
   const carryAmount = JSBI.BigInt(parsedDec.length.toString())
-  const carry = JSBI.exponentiate(JSBI.BigInt('10'), carryAmount)
 
-  const shiftedAmount = JSBI.multiply(amount, carry)
-  const convertedAmount = JSBI.divide(shiftedAmount, JSBI.BigInt(rate))
+  const scaledRate = JSBI.multiply(
+    JSBI.BigInt(rate),
+    JSBI.exponentiate(
+      JSBI.BigInt('10'),
+      JSBI.add(PRECISION_MIN, JSBI.BigInt(String(targetDecimals)))
+    )
+  )
+
+  const convertedAmount = JSBI.divide(
+    JSBI.divide(
+      JSBI.multiply(amount, scaledRate),
+      JSBI.exponentiate(JSBI.BigInt('10'), JSBI.add(PRECISION_MIN, carryAmount))
+    ),
+    JSBI.exponentiate(JSBI.BigInt('10'), JSBI.BigInt(String(decimals)))
+  )
 
   return convertedAmount
 }
