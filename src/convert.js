@@ -6,10 +6,6 @@ import JSBI from 'jsbi'
 // step and scale it up by an arbitrary amount first before doing all other calculations.
 const PRECISION_MIN = JSBI.BigInt('6')
 
-function getRawRate(convertRate) {
-  return convertRate.toString().split('.')
-}
-
 /**
  * Converts an amount. The conversion rate is expressed as the amount of the output token
  * obtained per unit of the input token.
@@ -33,7 +29,7 @@ export function getConvertedAmount(
   convertRate,
   targetDecimals
 ) {
-  const [whole = '', dec = ''] = getRawRate(convertRate)
+  const [whole = '', dec = ''] = convertRate.toString().split('.')
   // Remove any trailing zeros from the decimal part
   const parsedDec = dec.replace(/0*$/, '')
   // Construct the final rate, and remove any leading zeros
