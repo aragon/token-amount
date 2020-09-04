@@ -45,7 +45,7 @@ export function getConvertedAmount(
   // We need to remember this to properly scale the resulting converted number
   // down, as the decimals added through the safe shifting of the conversion rate
   // will get added to the final number.
-  const carryAmount = JSBI.BigInt(parsedDec.length.toString())
+  const ratePrecision = JSBI.BigInt(parsedDec.length)
 
   const scaledRate = JSBI.multiply(
     rate,
@@ -55,7 +55,7 @@ export function getConvertedAmount(
   const convertedAmount = JSBI.divide(
     JSBI.divide(
       JSBI.multiply(amount, scaledRate),
-      JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, carryAmount))
+      JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, ratePrecision))
     ),
     JSBI.exponentiate(_10, decimals)
   )
