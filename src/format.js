@@ -29,6 +29,7 @@ export function formatNumber(number) {
  * @param {BigInt|string|number} amount              Number to round
  * @param {BigInt|string|number} decimals            Decimal placement for amount
  * @param {BigInt|string|number} digits              Rounds the number to a given decimal place
+ * @param {boolean}              options.commify     Decides if the formatted amount should include commas
  * @param {boolean}              options.displaySign Decides if the sign should be displayed
  * @param {string}               options.symbol      Symbol for the token amount
  * @returns {string}
@@ -36,7 +37,7 @@ export function formatNumber(number) {
 export function formatTokenAmount(
   amount,
   decimals,
-  { digits = 2, symbol = '', displaySign = false } = {}
+  { commify = true, digits = 2, symbol = '', displaySign = false } = {}
 ) {
   amount = JSBI.BigInt(String(amount))
   decimals = JSBI.BigInt(String(decimals))
@@ -72,9 +73,8 @@ export function formatTokenAmount(
         )
       )
 
-  const leftPart = formatNumber(
-    JSBI.divide(amountConverted, JSBI.exponentiate(_10, digits))
-  )
+  const leftPart = JSBI.divide(amountConverted, JSBI.exponentiate(_10, digits))
+  const processedLeftPart = commify ? formatNumber(leftPart) : leftPart
 
   const rightPart = String(
     JSBI.remainder(amountConverted, JSBI.exponentiate(_10, digits))
@@ -84,7 +84,7 @@ export function formatTokenAmount(
 
   return [
     displaySign ? (negative ? '-' : '+') : '',
-    leftPart,
+    processedLeftPart,
     rightPart ? `.${rightPart}` : '',
     symbol ? `${NO_BREAK_SPACE}${symbol}` : '',
   ].join('')
