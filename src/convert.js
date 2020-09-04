@@ -5,6 +5,7 @@ import JSBI from 'jsbi'
 // We'd usually calculate this manually, but can be a chore; so we'll take an extra
 // step and scale it up by an arbitrary amount first before doing all other calculations.
 const PRECISION_MIN = JSBI.BigInt(6)
+const _10 = JSBI.BigInt(10)
 
 /**
  * Converts an amount. The conversion rate is expressed as the amount of the output token
@@ -48,18 +49,15 @@ export function getConvertedAmount(
 
   const scaledRate = JSBI.multiply(
     rate,
-    JSBI.exponentiate(
-      JSBI.BigInt('10'),
-      JSBI.add(PRECISION_MIN, JSBI.BigInt(String(targetDecimals)))
-    )
+    JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, targetDecimals))
   )
 
   const convertedAmount = JSBI.divide(
     JSBI.divide(
       JSBI.multiply(amount, scaledRate),
-      JSBI.exponentiate(JSBI.BigInt('10'), JSBI.add(PRECISION_MIN, carryAmount))
+      JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, carryAmount))
     ),
-    JSBI.exponentiate(JSBI.BigInt('10'), JSBI.BigInt(String(decimals)))
+    JSBI.exponentiate(_10, decimals)
   )
 
   return convertedAmount
