@@ -35,4 +35,8 @@ describe('convertAmount tests', () => {
       '23998328'
     )
   })
+
+  test('Handles conversion rates higher than the amount', () => {
+    expect(convertAmount(10, 0, '23998327.76987439', 0)).toEqual('239983278')
+  })
 })

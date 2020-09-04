@@ -38,7 +38,7 @@ export function convertAmount(amount, decimals, convertRate, targetDecimals) {
   const scaledRate = JSBI.multiply(rate, JSBI.exponentiate(_10, targetDecimals))
 
   const convertedAmount = divideRoundBigInt(
-    JSBI.divide(
+    divideRoundBigInt(
       JSBI.multiply(amount, scaledRate),
       JSBI.exponentiate(_10, ratePrecision)
     ),
