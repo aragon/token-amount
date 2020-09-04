@@ -25,12 +25,7 @@ const _10 = JSBI.BigInt(10)
  * @param {BigInt|string|number} targetDecimals      Decimals for the output amount.
  * @returns {string}
  */
-export function getConvertedAmount(
-  amount,
-  decimals,
-  convertRate,
-  targetDecimals
-) {
+export function convertAmount(amount, decimals, convertRate, targetDecimals) {
   amount = JSBI.BigInt(String(amount))
   decimals = JSBI.BigInt(String(decimals))
   targetDecimals = JSBI.BigInt(String(targetDecimals))
