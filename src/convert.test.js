@@ -24,12 +24,15 @@ describe('convertAmount tests', () => {
     expect(convertAmount(4000n * ONE_ETH, 18, '400', 2)).toEqual('160000000')
   })
 
-  test('rounds truncated decimals properly', () => {
+  test('Rounds properly during the conversion', () => {
     expect(convertAmount(ONE_ETH, 18, '23998327.34987439', 2)).toEqual(
       '2399832735'
     )
     expect(convertAmount(1, 2, '23998327.34987439', 9)).toEqual(
       '239983273498744'
+    )
+    expect(convertAmount(ONE_ETH, 18, '23998327.74987439', 0)).toEqual(
+      '23998328'
     )
   })
 })
