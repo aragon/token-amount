@@ -17,10 +17,10 @@ const PRECISION_MIN = JSBI.BigInt(6)
  * Conversion rate: 0.5 ETH per ANT. (1 ANT = 0.5 ETH)
  * Converted Amount = 10 * 0.50 = 5 ETH.
  *
- * @param {BigInt} amount                            Amount of the input token to convert.
+ * @param {BigInt|string|number} amount              Amount of the input token to convert.
  * @param {BigInt|string|number} decimals            Decimals of the input token to convert.
- * @param {BigInt|string|number} convertRate         Rate of conversion between the input and output token.
- * @param {BigInt} targetDecimals                    Decimals for the output amount.
+ * @param {string|number} convertRate                Rate of conversion between the input and output token.
+ * @param {BigInt|string|number} targetDecimals      Decimals for the output amount.
  * @returns {BigInt}
  */
 export function getConvertedAmount(
@@ -29,9 +29,15 @@ export function getConvertedAmount(
   convertRate,
   targetDecimals
 ) {
-  const [whole = '', dec = ''] = convertRate.toString().split('.')
+  amount = JSBI.BigInt(String(amount))
+  decimals = JSBI.BigInt(String(decimals))
+  targetDecimals = JSBI.BigInt(String(targetDecimals))
+
+  const [whole = '', dec = ''] = String(convertRate).split('.')
+
   // Remove any trailing zeros from the decimal part
   const parsedDec = dec.replace(/0*$/, '')
+
   // Construct the final rate, and remove any leading zeros
   const rate = `${whole}${parsedDec}`.replace(/^0*/, '')
 
