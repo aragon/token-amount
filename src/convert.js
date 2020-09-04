@@ -4,7 +4,7 @@ import JSBI from 'jsbi'
 // numbers so we can perform certain calculations such as division more easily;
 // We'd usually calculate this manually, but can be a chore; so we'll take an extra
 // step and scale it up by an arbitrary amount first before doing all other calculations.
-const PRECISION_MIN = JSBI.BigInt('6')
+const PRECISION_MIN = JSBI.BigInt(6)
 
 /**
  * Converts an amount. The conversion rate is expressed as the amount of the output token
