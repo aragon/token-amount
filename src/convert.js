@@ -1,11 +1,7 @@
 import JSBI from 'jsbi'
 import { divideRoundBigInt } from './math'
 
-// Many times during calculations we need to "scale up" the
-// numbers so we can perform certain calculations such as division more easily;
-// We'd usually calculate this manually, but can be a chore; so we'll take an extra
-// step and scale it up by an arbitrary amount first before doing all other calculations.
-const PRECISION_MIN = JSBI.BigInt(6)
+// Cache 10 since we are using it a lot.
 const _10 = JSBI.BigInt(10)
 
 /**
@@ -30,28 +26,21 @@ export function convertAmount(amount, decimals, convertRate, targetDecimals) {
   decimals = JSBI.BigInt(String(decimals))
   targetDecimals = JSBI.BigInt(String(targetDecimals))
 
-  const [whole = '', dec = ''] = String(convertRate).split('.')
+  let [rateWhole = '', rateDec = ''] = String(convertRate).split('.')
 
   // Remove any trailing zeros from the decimal part
-  const parsedDec = dec.replace(/0*$/, '')
+  rateDec = rateDec.replace(/0*$/, '')
 
   // Construct the final rate, and remove any leading zeros
-  const rate = JSBI.BigInt(`${whole}${parsedDec}`.replace(/^0*/, ''))
+  const rate = JSBI.BigInt(`${rateWhole}${rateDec}`.replace(/^0*/, ''))
 
-  // We need to remember this to properly scale the resulting converted number
-  // down, as the decimals added through the safe shifting of the conversion rate
-  // will get added to the final number.
-  const ratePrecision = JSBI.BigInt(parsedDec.length)
-
-  const scaledRate = JSBI.multiply(
-    rate,
-    JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, targetDecimals))
-  )
+  const ratePrecision = JSBI.BigInt(rateDec.length)
+  const scaledRate = JSBI.multiply(rate, JSBI.exponentiate(_10, targetDecimals))
 
   const convertedAmount = divideRoundBigInt(
     JSBI.divide(
       JSBI.multiply(amount, scaledRate),
-      JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, ratePrecision))
+      JSBI.exponentiate(_10, ratePrecision)
     ),
     JSBI.exponentiate(_10, decimals)
   )
