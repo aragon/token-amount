@@ -1,4 +1,5 @@
 import JSBI from 'jsbi'
+import { divideRoundBigInt } from './math'
 
 // Many times during calculations we need to "scale up" the
 // numbers so we can perform certain calculations such as division more easily;
@@ -52,7 +53,7 @@ export function getConvertedAmount(
     JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, targetDecimals))
   )
 
-  const convertedAmount = JSBI.divide(
+  const convertedAmount = divideRoundBigInt(
     JSBI.divide(
       JSBI.multiply(amount, scaledRate),
       JSBI.exponentiate(_10, JSBI.add(PRECISION_MIN, ratePrecision))

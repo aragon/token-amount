@@ -47,4 +47,13 @@ describe('getConvertedAmount tests', () => {
       '40000'
     )
   })
+
+  test('rounds truncated decimals properly', () => {
+    expect(
+      getConvertedAmount(ONE_ETH, 18, '23998327.34987439', 2).toString()
+    ).toEqual('2399832735')
+    expect(getConvertedAmount(1, 2, '23998327.34987439', 9).toString()).toEqual(
+      '239983273498744'
+    )
+  })
 })
