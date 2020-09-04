@@ -23,7 +23,7 @@ const _10 = JSBI.BigInt(10)
  * @param {BigInt|string|number} decimals            Decimals of the input token to convert.
  * @param {string|number} convertRate                Rate of conversion between the input and output token.
  * @param {BigInt|string|number} targetDecimals      Decimals for the output amount.
- * @returns {BigInt}
+ * @returns {string}
  */
 export function getConvertedAmount(
   amount,
@@ -61,5 +61,5 @@ export function getConvertedAmount(
     JSBI.exponentiate(_10, decimals)
   )
 
-  return convertedAmount
+  return String(convertedAmount)
 }
