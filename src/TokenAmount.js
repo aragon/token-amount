@@ -47,10 +47,10 @@ export default class TokenAmount {
     return new TokenAmount(data.v, data.d, { symbol: data.s })
   }
 
-  static convert(amount, decimals, convertRate, targetDecimals, options) {
+  static convert(amount, convertRate, targetDecimals, options) {
     const convertedAmount = convertAmount(
-      amount,
-      decimals,
+      amount.value,
+      amount.decimals,
       convertRate,
       targetDecimals
     )
@@ -58,13 +58,7 @@ export default class TokenAmount {
   }
 
   convert(rate, targetDecimals, options) {
-    return TokenAmount.convert(
-      this.#value,
-      this.#decimals,
-      rate,
-      targetDecimals,
-      options
-    )
+    return TokenAmount.convert(this, rate, targetDecimals, options)
   }
 
   static format = formatTokenAmount
