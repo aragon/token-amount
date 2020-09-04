@@ -24,7 +24,7 @@ console.log(amount.format()) // '9.39 ANT'
 
 ## API
 
-### Instanciating
+### Constructor
 
 #### new TokenAmount(value, decimals, { symbol })
 
