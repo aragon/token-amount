@@ -39,7 +39,7 @@ export function getConvertedAmount(
   const parsedDec = dec.replace(/0*$/, '')
 
   // Construct the final rate, and remove any leading zeros
-  const rate = `${whole}${parsedDec}`.replace(/^0*/, '')
+  const rate = JSBI.BigInt(`${whole}${parsedDec}`.replace(/^0*/, ''))
 
   // We need to remember this to properly scale the resulting converted number
   // down, as the decimals added through the safe shifting of the conversion rate
@@ -47,7 +47,7 @@ export function getConvertedAmount(
   const carryAmount = JSBI.BigInt(parsedDec.length.toString())
 
   const scaledRate = JSBI.multiply(
-    JSBI.BigInt(rate),
+    rate,
     JSBI.exponentiate(
       JSBI.BigInt('10'),
       JSBI.add(PRECISION_MIN, JSBI.BigInt(String(targetDecimals)))
