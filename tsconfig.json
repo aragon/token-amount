@@ -5,7 +5,7 @@
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
-    "target": "es6",
+    "target": "ES2020",
     // output .d.ts declaration files for consumers
     "declaration": true,
     // output .js.map sourcemap files for consumers

@@ -1,6 +1,6 @@
 import { convertAmount } from './convert'
 
-const ONE_ETH = BigInt(1000000000000000000)
+const ONE_ETH = 1000000000000000000n
 
 describe('convertAmount tests', () => {
   test('Converts amounts correctly', () => {
@@ -21,9 +21,7 @@ describe('convertAmount tests', () => {
     expect(convertAmount(1, 0, '0.125', 3)).toEqual('125')
     expect(convertAmount(100, 0, '50', 0)).toEqual('5000')
     expect(convertAmount(ONE_ETH, 18, '400', 2)).toEqual('40000')
-    expect(convertAmount(BigInt(4000) * ONE_ETH, 18, '400', 2)).toEqual(
-      '160000000'
-    )
+    expect(convertAmount(4000n * ONE_ETH, 18, '400', 2)).toEqual('160000000')
   })
 
   test('Rounds properly during the conversion', () => {
