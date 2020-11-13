@@ -16,12 +16,15 @@ export function formatNumber(number: BigIntish): string {
   const numAsString = String(number)
   const [integer, decimals] = numAsString.split('.')
 
-  return [...integer].reverse().reduce(
-    (result, digit, index) => {
-      return `${digit}${index > 0 && index % 3 === 0 ? ',' : ''}${result}`
-    },
-    decimals ? `.${decimals}` : ''
-  )
+  return integer
+    .split('')
+    .reverse()
+    .reduce(
+      (result, digit, index) => {
+        return `${digit}${index > 0 && index % 3 === 0 ? ',' : ''}${result}`
+      },
+      decimals ? `.${decimals}` : ''
+    )
 }
 
 /**
