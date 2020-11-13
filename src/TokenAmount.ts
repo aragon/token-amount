@@ -36,7 +36,7 @@ export default class TokenAmount {
   }
 
   static import(json: string): TokenAmount {
-    let data
+    let data: ExportData
 
     try {
       data = JSON.parse(json) as ExportData

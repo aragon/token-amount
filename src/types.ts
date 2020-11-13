@@ -1,6 +1,4 @@
-import JSBI from 'jsbi'
-
-export type BigIntish = BigInt | JSBI | string | number
+export type BigIntish = BigInt | { toString: () => string } | string | number
 
 export type Rate = string | number
 
@@ -12,7 +10,7 @@ export type Options = {
 }
 
 export type ExportData = {
-  v: BigIntish
-  d: BigIntish
+  v: string
+  d: number
   s?: string
 }
