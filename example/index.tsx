@@ -5,7 +5,7 @@ import TokenAmount from 'token-amount'
 
 function App() {
   const value = new BN('938829587970788394500000')
-  const amount = new TokenAmount(value, 18).format()
+  const formattedAmount = new TokenAmount(value, 18).format()
 
   return (
     <div
@@ -18,7 +18,7 @@ function App() {
         fontSize: 50,
       }}
     >
-      {amount}
+      {formattedAmount}
     </div>
   )
 }
