@@ -1,4 +1,3 @@
-import JSBI from 'jsbi'
 import { NO_BREAK_SPACE } from './characters'
 import { divideRoundBigInt } from './math'
 import { BigIntish, Options } from './types'
@@ -47,50 +46,42 @@ export function formatTokenAmount(
     displaySign = false,
   } = options
 
-  let parsedAmount = JSBI.BigInt(String(amount))
-  const parsedDecimals = JSBI.BigInt(String(decimals))
-  let parsedDigits = JSBI.BigInt(String(digits))
+  let parsedAmount = BigInt(String(amount))
+  const parsedDecimals = BigInt(String(decimals))
+  let parsedDigits = BigInt(String(digits))
 
-  const _0 = JSBI.BigInt(0)
-  const _10 = JSBI.BigInt(10)
+  const _0 = BigInt(0)
+  const _10 = BigInt(10)
 
-  if (JSBI.lessThan(parsedDecimals, _0)) {
+  if (parsedDecimals < _0) {
     throw new Error('formatTokenAmount(): decimals cannot be negative')
   }
 
-  if (JSBI.lessThan(parsedDigits, _0)) {
+  if (parsedDigits < _0) {
     throw new Error('formatTokenAmount(): digits cannot be negative')
   }
 
-  if (JSBI.lessThan(parsedDecimals, parsedDigits)) {
+  if (parsedDecimals < parsedDigits) {
     parsedDigits = parsedDecimals
   }
 
-  const negative = JSBI.lessThan(parsedAmount, _0)
+  const negative = parsedAmount < _0
 
   if (negative) {
-    parsedAmount = JSBI.unaryMinus(parsedAmount)
+    parsedAmount = -parsedAmount
   }
 
-  const amountConverted = JSBI.equal(parsedDecimals, _0)
-    ? parsedAmount
-    : JSBI.BigInt(
-        divideRoundBigInt(
-          parsedAmount,
-          JSBI.exponentiate(_10, JSBI.subtract(parsedDecimals, parsedDigits))
-        )
-      )
+  const amountConverted =
+    parsedDecimals === _0
+      ? parsedAmount
+      : divideRoundBigInt(parsedAmount, _10 ** (parsedDecimals - parsedDigits))
 
-  const leftPart = JSBI.divide(
-    amountConverted,
-    JSBI.exponentiate(_10, parsedDigits)
-  )
+  const leftPart = amountConverted / _10 ** parsedDigits
+
   const processedLeftPart = commify ? formatNumber(leftPart) : leftPart
 
-  const rightPart = String(
-    JSBI.remainder(amountConverted, JSBI.exponentiate(_10, parsedDigits))
-  )
-    .padStart(Number(parsedDigits), '0')
+  const rightPart = String(amountConverted % _10 ** parsedDigits)
+    .padStart(parseInt(String(parsedDigits)), '0')
     .replace(/0+$/, '')
 
   return [

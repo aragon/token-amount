@@ -1,22 +1,10 @@
-import JSBI from 'jsbi'
-import { BigIntish } from './types'
-
 /**
  * Divide and round two big integers.
  *
- * @param {BigInt|string|number} dividend Integer to be divided + rounded
- * @param {BigInt|string|number} divisor  Divisor
- * @returns {string}
+ * @param {bigint} dividend Integer to be divided + rounded
+ * @param {bigint} divisor  Divisor
+ * @returns {bigint}
  */
-export function divideRoundBigInt(
-  dividend: BigIntish,
-  divisor: BigIntish
-): string {
-  const parsedDividend = JSBI.BigInt(String(dividend))
-  const parsedDivisor = JSBI.BigInt(String(divisor))
-
-  return JSBI.divide(
-    JSBI.add(parsedDividend, JSBI.divide(parsedDivisor, JSBI.BigInt(2))),
-    parsedDivisor
-  ).toString()
+export function divideRoundBigInt(dividend: bigint, divisor: bigint): bigint {
+  return (dividend + divisor / BigInt(2)) / divisor
 }

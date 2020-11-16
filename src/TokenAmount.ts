@@ -1,21 +1,20 @@
-import JSBI from 'jsbi'
 import { convertAmount } from './convert'
 import { formatTokenAmount } from './format'
 import { BigIntish, ExportData, Options, Rate } from './types'
 
 export default class TokenAmount {
-  #decimals: JSBI
-  #value: JSBI
+  #decimals: bigint
+  #value: bigint
   #symbol: string
 
   constructor(value: BigIntish, decimals: BigIntish, { symbol = '' } = {}) {
-    this.#decimals = JSBI.BigInt(String(decimals))
-    this.#value = JSBI.BigInt(String(value))
+    this.#decimals = BigInt(String(decimals))
+    this.#value = BigInt(String(value))
     this.#symbol = symbol
   }
 
   get decimals(): number {
-    return JSBI.toNumber(this.#decimals)
+    return Number(this.#decimals)
   }
 
   get symbol(): string {
