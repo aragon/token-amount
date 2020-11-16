@@ -1,34 +1,16 @@
 module.exports = {
   env: {
-    browser: true,
-    es6: true,
-    node: true,
-    'jest/globals': true,
+    jest: true,
   },
   extends: [
-    'standard',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
-    'plugin:jest/recommended',
   ],
-  parser: 'babel-eslint',
+  plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
-    ecmaFeatures: {
-      experimentalObjectRestSpread: true,
-      jsx: true,
-    },
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
-  plugins: ['prettier', 'jest'],
-  rules: {
-    'import/no-unresolved': 'error',
-    'promise/no-nesting': ['off'],
-    'linebreak-style': ['error', 'unix'],
-    curly: 'error',
-  },
-  overrides: [
-    {
-      files: ['**/*.test.js'],
-      env: { jest: true },
-    },
-  ],
 }
