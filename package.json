@@ -13,6 +13,11 @@
   "engines": {
     "node": ">=10"
   },
+  "browserslist": [
+    "> 2%",
+    "not dead",
+    "not ie > 0"
+  ],
   "scripts": {
     "start": "tsdx watch --transpileOnly",
     "build": "tsdx build",
@@ -52,6 +57,5 @@
     "tsdx": "^0.14.0",
     "tslib": "^2.0.1",
     "typescript": "^4.0.3"
-  },
-  "peerDependencies": {}
+  }
 }

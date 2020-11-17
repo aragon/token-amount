@@ -1,4 +1,4 @@
-export type BigIntish = BigInt | { toString: () => string } | string | number
+export type BigIntish = bigint | { toString: () => string } | string | number
 
 export type Rate = string | number
 
