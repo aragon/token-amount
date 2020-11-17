@@ -10,11 +10,15 @@
     "token-amount": "link:.."
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
     "@types/bn.js": "^4.11.6",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "parcel": "^1.12.3",
     "typescript": "^3.4.5"
-  }
+  },
+  "browserslist": [
+    "> 2%",
+    "not dead",
+    "not ie > 0"
+  ]
 }
