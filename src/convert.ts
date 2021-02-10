@@ -1,9 +1,8 @@
-import JSBI from 'jsbi'
 import { divideRoundBigInt } from './math'
 import { BigIntish } from './types'
 
 // Cache 10 since we are using it a lot.
-const _10 = JSBI.BigInt(10)
+const _10 = BigInt(10)
 
 /**
  * Converts an amount. The conversion rate is expressed as the amount of the output token
@@ -28,9 +27,9 @@ export function convertAmount(
   convertRate: string | number,
   targetDecimals: BigIntish
 ): string {
-  const parsedAmount = JSBI.BigInt(String(amount))
-  const parsedDecimals = JSBI.BigInt(String(decimals))
-  const parsedTargetDecimals = JSBI.BigInt(String(targetDecimals))
+  const parsedAmount = BigInt(String(amount))
+  const parsedDecimals = BigInt(String(decimals))
+  const parsedTargetDecimals = BigInt(String(targetDecimals))
 
   const [rateWhole = '', rateDec = ''] = String(convertRate).split('.')
 
@@ -38,20 +37,14 @@ export function convertAmount(
   const parsedRateDec = rateDec.replace(/0*$/, '')
 
   // Construct the final rate, and remove any leading zeros
-  const rate = JSBI.BigInt(`${rateWhole}${parsedRateDec}`.replace(/^0*/, ''))
+  const rate = BigInt(`${rateWhole}${parsedRateDec}`.replace(/^0*/, ''))
 
-  const ratePrecision = JSBI.BigInt(parsedRateDec.length)
-  const scaledRate = JSBI.multiply(
-    rate,
-    JSBI.exponentiate(_10, parsedTargetDecimals)
-  )
+  const ratePrecision = BigInt(parsedRateDec.length)
+  const scaledRate = rate * _10 ** parsedTargetDecimals
 
   const convertedAmount = divideRoundBigInt(
-    divideRoundBigInt(
-      JSBI.multiply(parsedAmount, scaledRate),
-      JSBI.exponentiate(_10, ratePrecision)
-    ),
-    JSBI.exponentiate(_10, parsedDecimals)
+    divideRoundBigInt(parsedAmount * scaledRate, _10 ** ratePrecision),
+    _10 ** parsedDecimals
   )
 
   return String(convertedAmount)

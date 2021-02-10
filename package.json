@@ -43,9 +43,7 @@
       "limit": "10 KB"
     }
   ],
-  "dependencies": {
-    "jsbi": "^3.1.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.6.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",

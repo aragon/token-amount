@@ -15,5 +15,10 @@
     "@types/react-dom": "^16.9.8",
     "parcel": "^1.12.3",
     "typescript": "^3.4.5"
-  }
+  },
+  "browserslist": [
+    "> 2%",
+    "not dead",
+    "not ie > 0"
+  ]
 }
